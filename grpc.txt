@@ -1,0 +1,47 @@
+O que é o GRPC?
+	É um protocolo de alto desempenho desenvolvido pela google, baseado em HTTP/2 para troca de mensagens
+e utiliza do Protocol Buffers para serealização de dados.
+	A base do GRPC são as chamadas de Procedimento Remoto (RPC), dessa forma, conseguimos invocar metodos
+remotos definidos pelas interfaces IDL (Description Language) permitindo que as mais diversas operações sejam
+realizadas em uma única solicitação. Por exemplo, podemos definir um serviço em um arquivo .proto usando o 
+Protocol Buffers, especificando os métodos que podem ser chamados remotamente e os tipos de dados que serão 
+trocados. Isso proporciona uma maneira estruturada e eficiente de realizar comunicação entre sistemas distribuídos.
+	As interfaces IDL, definidas em arquivos .proto, desempenham um papel fundamental no gRPC. Elas permitem que os 
+desenvolvedores descrevam os métodos remotos disponíveis em um serviço, bem como os tipos de dados que esses métodos
+aceitam e retornam. Por exemplo, um arquivo .proto pode conter definições de mensagens e serviços, como no exeplo abaixo:
+
+service MyService {
+  rpc DoSomething(Request) returns (Response);
+}
+
+	Essa definição indica que o serviço MyService possui um método DoSomething que recebe um Request e retorna um Response. 
+O Protocol Buffers usa essa definição para gerar código cliente e servidor em diferentes linguagens de programação, 
+facilitando a comunicação entre eles.
+	Além das chamadas de RPC e das interfaces IDL, o gRPC oferece uma variedade de recursos avançados, como streaming bidirecional, 
+interceptadores, autenticação e segurança. Por exemplo, o streaming bidirecional permite a transmissão contínua de dados entre cliente 
+e servidor, enquanto os interceptadores podem ser usados para adicionar lógica de negócios comuns a todas as chamadas de RPC.
+
+
+GRPC - Tutorial de uso
+
+1) Protocol Buffers
+	Há duas de se trabalhar com Protocol Buffer:
+	
+	1) Instalando o compilador na máquina (Windows)
+		- Devemos inicialmente baixar o compilador para nosso sistema operacional
+	através do site https://github.com/protocolbuffers/protobuf/releases
+		- É fundamental instalar as seguintes libs através dos comandos abaixo:
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+		- Após isso, basta adicionar na variável de ambiente path o caminho
+	no qual se encontra o arquivo protoc.exe (protoc-26.1-win64\bin)
+		- Deste modo, basta criar os arquivos .proto e executar a linha de comando
+	protoc --go_out=. --go-grpc_out=. nomeDoArquivo.proto
+	Tal comando, irá gerar os arquivos de extensão pb.go os quais serão utilizados na 
+	implementação de nossos client/server.
+	
+	2) Utilizando de um conjunto de interfaces pre compiladas
+		- Coloque em seu projeto a bibliteca protobuf do golang, a qual pode adicionada
+	por meio do comando:
+		go get -u google.golang.org/protobuf@latest
+	
